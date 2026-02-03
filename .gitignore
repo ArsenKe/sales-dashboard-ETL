@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtualenv
+.venv/
+venv/
+
+# Environment
+.env
+
+# Docker volumes / DB files
+database/backups/
+postgres_data/
+metabase_data/
+
+# IDE
+.vscode/
