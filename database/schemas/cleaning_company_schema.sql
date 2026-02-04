@@ -27,7 +27,7 @@ CREATE TABLE dim_date (
     is_business_day BOOLEAN DEFAULT TRUE,
     
     -- Indizes
-    INDEX idx_dim_date_full_date (full_date)
+    
 );
 
 -- 2. KUNDENDIMENSION - Firmenkunden + Privatkunden
@@ -84,9 +84,7 @@ CREATE TABLE dim_customer (
     notes TEXT,
     
     -- Indizes
-    INDEX idx_customer_type (customer_type),
-    INDEX idx_customer_city (address_city),
-    INDEX idx_customer_status (customer_status)
+    
 );
 
 -- 3. DIENSTLEISTUNGSDIMENSION - Was wird angeboten?
@@ -172,8 +170,7 @@ CREATE TABLE dim_employee (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
     -- Indizes
-    INDEX idx_employee_status (employee_status),
-    INDEX idx_employee_type (employment_type)
+    
 );
 
 -- 5. FAKTTABELLE - AUFTRÄGE/TERMINE (Das HERZSTÜCK!)
@@ -250,12 +247,7 @@ CREATE TABLE fact_job (
     created_by VARCHAR(100),
     
     -- Indizes für Performance
-    INDEX idx_job_date (date_id),
-    INDEX idx_job_customer (customer_id),
-    INDEX idx_job_employee (assigned_employee_id),
-    INDEX idx_job_status (job_status),
-    INDEX idx_job_scheduled_date (scheduled_date),
-    INDEX idx_job_payment_status (payment_status)
+    
 );
 
 -- 6. WIEDERKEHRENDE AUFTRÄGE
@@ -455,3 +447,20 @@ INSERT INTO dim_employee (employee_code, first_name, last_name, employment_type,
 ('EMP001', 'Anna', 'Schmidt', 'Full-time', '2023-01-15', 18.50),
 ('EMP002', 'Markus', 'Weber', 'Part-time', '2023-03-20', 17.00),
 ('EMP003', 'Lisa', 'Bauer', 'Freelancer', '2024-01-10', 20.00);
+
+-- ============================================
+--  INDICES CREATED SEPARATELY (after all tables)
+
+CREATE INDEX IF NOT EXISTS idx_dim_date_full_date ON dim_date(full_date);
+CREATE INDEX IF NOT EXISTS idx_customer_type ON dim_customer(customer_type);
+CREATE INDEX IF NOT EXISTS idx_customer_city ON dim_customer(address_city);
+CREATE INDEX IF NOT EXISTS idx_customer_status ON dim_customer(customer_status);
+CREATE INDEX IF NOT EXISTS idx_employee_status ON dim_employee(employee_status);
+CREATE INDEX IF NOT EXISTS idx_employee_type ON dim_employee(employment_type);
+CREATE INDEX IF NOT EXISTS idx_job_date ON fact_job(date_id);
+CREATE INDEX IF NOT EXISTS idx_job_customer ON fact_job(customer_id);
+CREATE INDEX IF NOT EXISTS idx_job_employee ON fact_job(assigned_employee_id);
+CREATE INDEX IF NOT EXISTS idx_job_status ON fact_job(job_status);
+CREATE INDEX IF NOT EXISTS idx_job_scheduled_date ON fact_job(scheduled_date);
+CREATE INDEX IF NOT EXISTS idx_job_payment_status ON fact_job(payment_status);
+CREATE INDEX IF NOT EXISTS idx_job_created_at ON fact_job(created_at DESC);
