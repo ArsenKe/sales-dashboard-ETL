@@ -1,5 +1,3 @@
-
-
 version: '3.8'
 
 services:
@@ -12,8 +10,8 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-DFGr123}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./database/backups:/backups
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./database/schemas:/docker-entrypoint-initdb.d/schemas:ro
     ports:
       - "5432:5432"
     restart: unless-stopped
@@ -33,8 +31,7 @@ services:
       MB_DB_USER: admin
       MB_DB_PASS: ${DB_PASSWORD:-DFGr123}
       MB_DB_HOST: postgres
-      MB_SITE_NAME: "Sales Dashboard"
-      MB_EMOJI_IN_LOGO: "bar_chart"
+      MB_SITE_NAME: "Cleaning Company Dashboard"
     ports:
       - "3000:3000"
     depends_on:
@@ -43,13 +40,6 @@ services:
     restart: unless-stopped
     volumes:
       - metabase_data:/metabase-data
-
-  adminer:
-    image: adminer
-    container_name: db_admin
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
 
 volumes:
   postgres_data:

@@ -1,20 +1,35 @@
+# Environment
+.env
+.env.local
+
+# Docker
+postgres_data/
+metabase_data/
+docker-volumes/
+
 # Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# Virtualenv
-.venv/
+.Python
 venv/
-
-# Environment
-.env
-
-# Docker volumes / DB files
-database/backups/
-postgres_data/
-metabase_data/
+.venv/
 
 # IDE
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backup files
+database/backups/
+*.backup
