@@ -1,51 +1,22 @@
--- Simple initialization for Cleaning Company
+-- Cleaning Company Dashboard - Database Initialization
+-- Docker calls this script automatically on first startup
+-- Entry point that loads schema + sample data in correct order
 
--- Create basic tables
-CREATE TABLE IF NOT EXISTS customers (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    email VARCHAR(255),
-    city VARCHAR(100)
-);
+-- 1. Load main schema (dimensions, facts, views, triggers)
+\i /docker-entrypoint-initdb.d/schemas/cleaning_company_schema.sql
 
-CREATE TABLE IF NOT EXISTS services (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    price DECIMAL(10,2)
-);
+-- 2. Load sample/demo data
+\i /docker-entrypoint-initdb.d/schemas/sample_data.sql
 
-CREATE TABLE IF NOT EXISTS employees (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    hourly_wage DECIMAL(10,2)
-);
+-- 3. Verification & Summary
+SELECT '✅ Database initialization completed successfully!' AS status;
 
-CREATE TABLE IF NOT EXISTS jobs (
-    id SERIAL PRIMARY KEY,
-    customer_id INTEGER,
-    service_id INTEGER,
-    employee_id INTEGER,
-    job_date DATE,
-    hours DECIMAL(5,2),
-    total_price DECIMAL(10,2),
-    status VARCHAR(50)
-);
-
--- Insert sample data
-INSERT INTO customers (name, email, city) VALUES 
-('Firma Müller GmbH', 'mueller@test.at', 'Vienna'),
-('Bäckerei Schmidt', 'office@baeckerei.at', 'Graz');
-
-INSERT INTO services (name, price) VALUES
-('Grundreinigung', 25.00),
-('Fensterreinigung', 35.00);
-
-INSERT INTO employees (name, hourly_wage) VALUES
-('Anna Schmidt', 18.50),
-('Markus Weber', 17.00);
-
-INSERT INTO jobs (customer_id, service_id, employee_id, job_date, hours, total_price, status) VALUES
-(1, 1, 1, '2024-01-15', 4.5, 112.50, 'Completed'),
-(2, 2, 2, '2024-01-16', 3.0, 105.00, 'Completed');
-
-SELECT 'Database initialized successfully!' as message;
+-- Show table counts
+SELECT 
+    'Tables & Data Summary' AS report,
+    (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE') AS total_tables,
+    (SELECT COUNT(*) FROM dim_date) AS dim_date_records,
+    (SELECT COUNT(*) FROM dim_customer) AS dim_customer_records,
+    (SELECT COUNT(*) FROM dim_service) AS dim_service_records,
+    (SELECT COUNT(*) FROM dim_employee) AS dim_employee_records,
+    (SELECT COUNT(*) FROM fact_job) AS fact_job_records;
