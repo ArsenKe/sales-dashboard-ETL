@@ -45,4 +45,3 @@ class TestCSVAdapter:
         adapter = CSVAdapter(source_type='generic')
         assert adapter.source_type == 'generic'
 
-# Run tests with: pytest scripts/test/

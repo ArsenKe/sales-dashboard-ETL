@@ -24,10 +24,7 @@ CREATE TABLE dim_date (
     -- Business Flags
     is_weekend BOOLEAN NOT NULL,
     is_holiday BOOLEAN DEFAULT FALSE,
-    is_business_day BOOLEAN DEFAULT TRUE,
-    
-    -- Indizes
-    
+    is_business_day BOOLEAN DEFAULT TRUE
 );
 
 -- 2. KUNDENDIMENSION - Firmenkunden + Privatkunden
@@ -81,10 +78,7 @@ CREATE TABLE dim_customer (
     -- System
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    notes TEXT,
-    
-    -- Indizes
-    
+    notes TEXT
 );
 
 -- 3. DIENSTLEISTUNGSDIMENSION - Was wird angeboten?
@@ -167,10 +161,7 @@ CREATE TABLE dim_employee (
     
     -- System
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
-    -- Indizes
-    
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 5. FAKTTABELLE - AUFTRÄGE/TERMINE (Das HERZSTÜCK!)
@@ -244,10 +235,7 @@ CREATE TABLE fact_job (
     -- System
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    created_by VARCHAR(100),
-    
-    -- Indizes für Performance
-    
+    created_by VARCHAR(100)
 );
 
 -- 6. WIEDERKEHRENDE AUFTRÄGE

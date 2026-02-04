@@ -1,0 +1,6 @@
+# data/raw/sample_jobs.csv
+job_number,customer_name,customer_email,service_type,scheduled_date,hours,price,status
+JOB-001,Firma Müller GmbH,mueller@test.at,Grundreinigung,2024-01-15,4.5,112.50,Completed
+JOB-002,Bäckerei Schmidt,schmidt@baeckerei.at,Fensterreinigung,2024-01-16,3.0,105.00,Completed
+JOB-003,Hotel Tyrol,info@hotel-tyrol.at,Büroreinigung,2024-01-17,5.0,150.00,In Progress
+JOB-004,Familie Bauer,bauer@email.at,Grundreinigung,2024-01-18,2.5,62.50,Scheduled
